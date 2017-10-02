@@ -1,0 +1,83 @@
+$tile-gap: 0.75rem !default
+
+.tiles, .tile
+  display: flex
+  align-items: stretch
+  flex-basis: 0
+  flex-grow: 1
+  flex-shrink: 1
+  min-height: min-content
+
+.tiles
+  flex-wrap: wrap
+  margin: (-$tile-gap) (-$tile-gap) $tile-gap (-$tile-gap)
+  &:last-child
+    margin-bottom: (-$tile-gap)
+
+// tiles modifier : fullheight
+[class*="tiles--height-"]
+  margin: 0
+  .tile--child
+    flex-grow: 0
+    flex-shrink: 0
+  .tile--height
+    align-items: center
+    display: flex
+    flex-grow: 1
+    flex-shrink: 0
+    & > .container
+      flex-grow: 1
+      flex-shrink: 1
+
+@for $i from 1 through 12
+  .tiles--height-#{$i}
+    min-height: ($i / 12) * 100vh
+
+.tiles--vertical
+  flex-direction: column
+
+// tile modifiers
+.tile--child
+  margin: 0
+  display: block
+.tile--parent
+  padding: $tile-gap
+.tile--vertical
+  flex-direction: column
+  & > .tile--child:not(:last-child)
+    margin-bottom: ($tile-gap*2)
+
+// tile : col size
+@for $i from 1 through 12
+  .tile--#{$i}
+    flex: none
+    width: ($i / 12) * 100%
+
+// radius
+@for $i from 0 through 12
+  .tiles--radius-#{$i}, .tiles--radius-#{$i} .tile
+    border-radius: (0.10rem * $i)
+
+// marge-in
+@for $i from 0 through 12
+  .tiles--marge-in-#{$i} .tile--child
+      padding: (0.10rem * $i)
+
+// marge and border
+@for $i from 0 through 12
+  $tile-marge: 0.10rem * $i
+
+  .tiles--marge-#{$i}
+    margin: (-$tile-marge) (-$tile-marge) $tile-marge (-$tile-marge)
+    &:last-child
+      margin-bottom: (-$tile-marge)
+    .tile--parent
+      padding: $tile-marge
+    .tile--vertical
+      & > .tile--child:not(:last-child)
+        margin-bottom: ($tile-marge*2)
+
+  .tiles--border
+    margin-left: 0
+    margin-right: 0
+    padding: $tile-marge
